@@ -1,0 +1,26 @@
+{
+  "name": "todo-list-odin",
+  "version": "1.0.0",
+  "description": "Building a To Do List website as a learning exercise. Project by The Odin Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Japsier/todo-list-odin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Japsier/todo-list-odin/issues"
+  },
+  "homepage": "https://github.com/Japsier/todo-list-odin#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
