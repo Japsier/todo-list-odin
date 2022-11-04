@@ -21,10 +21,15 @@ header {
 }
 .sidebar {
     grid-area: 2 / 1 / 3 / 2;
-    background-color: lightgrey;
+    background-color: #e2e8f0;
     padding: 10px;
 }
 .projectsNav {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+.todoDiv {
 
 }
 .projectsNavHeader {
@@ -56,29 +61,94 @@ header {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 5px;
+    padding: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.projectDiv:hover {
+    border-left: 3px solid #2ebf91;
+    
 }
 .removeProjectButton {
     position: absolute;
-    right: 0;
-    top: 5px;
+    right: 10px;
+    top: auto;
+    bottom: auto;
+    border-radius: 50%;
+    background: transparent;
+    border: 0;
+    font-size: 18px;
+}
+.removeProjectButton:hover {
+    text-decoration: underline;
 }
 .active {
-    background-color: yellow;
+    border-radius: 10px;
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) )
 }
 .content {
     grid-area: 2 / 2 / 3 / 3;
 }
 .contentHeader {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
 }
 .contentHeader > h2 {
     text-align: center;
+    margin-left: calc(50% - 100px)
 }
 .contentHeader > button {
-    position: absolute;
-    right: 20px;
-    top: 5px;
+    margin-right: 3vw;
+}
+.newTodoButton {
+   width: 100px; 
+   height: 50px;
+   font-size: 24px;
+   border-radius: 25px;
+   border: 2px solid #2ebf91;
+   color: #03b47c;
+   background-color: white;
+}
+.newTodoButton:hover {
+    background-image: linear-gradient(to right, #8360c3, #2ebf91);
+    color: white;
+    border: 0;
+    cursor: pointer;
+}
+.userInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.todoDiv {
+    display: flex;
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    justify-content: space-between;
+    font-size: 22px;
+    border-left: 2px solid #8360c3;
+    margin-bottom: 20px;
+}
+.todoDiv > button {
+    background-color: white;
+    border: 0;
+    border-bottom: 1px solid #2ebf91;
+    color: #2ebf91;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.todoDiv > button:hover {
+    color: white;
+    background-image: linear-gradient(to right, #8360c3, #2ebf91);
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 700;
+    border: 0;
 }
 footer {
     grid-area: 3 / 1 / 4 / 3;

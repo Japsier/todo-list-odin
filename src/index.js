@@ -190,6 +190,7 @@ let domStuff = (() => {
         let contentDiv = document.querySelector(".content")
 
         let inputDiv = document.createElement("div")
+        inputDiv.classList.add("userInput")
         contentDiv.appendChild(inputDiv) 
 
         let nameInput = document.createElement("input")
@@ -225,7 +226,7 @@ let domStuff = (() => {
 
         let todoDeleteButton = document.createElement("button")
         todoDeleteButton.classList.add("todoDeleteButton")
-        todoDeleteButton.innerText = "X"
+        todoDeleteButton.innerText = "remove"
         todoDiv.appendChild(todoDeleteButton)
 
         todoDeleteButton.addEventListener("click", (e) => {
