@@ -23,11 +23,16 @@ const displayController = (() => {
     }
     let createProjectContent = (number) => {
         console.log(number)
+        let todoDisplay = document.querySelector(".todoDisplay")
+        todoDisplay.innerHTML = ""
         projectPages.forEach((item) => {
             item.isActive = false
             if (item.counter == number) {
                 item.isActive = true
                 console.log(item.name)
+                for (let i = 0; i < item.todoLists.length; i++) {
+                   todoDisplay.appendChild(item.todoLists[i]) 
+                }
             }
         })
         
@@ -168,8 +173,8 @@ let domStuff = (() => {
         
 
     }
+    let todoCounter = 0
     let createTodoDiv = (todoName) => {
-        let todoCounter = 0
 
         let todoDiv = document.createElement("div")
         todoDiv.classList.add("todoDiv", `todo${todoCounter}`)
