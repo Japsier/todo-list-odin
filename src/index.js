@@ -4,6 +4,9 @@ const listeners = (() => {
     document.querySelector(".addProjectButton").addEventListener("click", () => {
         domStuff.createProjectInput()
     })
+    document.querySelector(".newTodoButton").addEventListener("click", () => {
+        displayController.addTodo()
+    })
 
 
 })();
@@ -23,15 +26,35 @@ const displayController = (() => {
         projectPages.forEach((item) => {
             item.isActive = false
             if (item.counter == number) {
-                item.isActive == true
+                item.isActive = true
                 console.log(item.name)
             }
         })
         
 
     }
+    let addTodo = () => {
+        projectPages.forEach((item) => {
+            console.log("hello")
+            if (item.isActive == true) {
+                console.log("hello2")
+                let todoDiv = document.createElement("div")
+                todoDiv.classList.add("todoDiv")
+                document.querySelector(".content").appendChild(todoDiv)
 
-    return {createProject, createProjectContent}
+                function xxx(todoname) {
+                    let todoName = document.createElement("div")
+                    todoDiv.appendChild(todoName)
+                    todoName.innerText = todoname
+                }
+                domStuff.createToDoInput(xxx)
+                
+
+            }
+        })
+    }
+
+    return {createProject, createProjectContent, addTodo}
 })()
 const projectFactory = (projectName, projectCounter) => {
     let name = projectName
@@ -104,7 +127,33 @@ let domStuff = (() => {
     let removeProject = () => {
 
     }
-    return {createProjectInput, appendProject}
+    let createToDoInput = (callback) => {
+        console.log("input")
+        let contentDiv = document.querySelector(".content")
+
+        let inputDiv = document.createElement("div")
+        contentDiv.appendChild(inputDiv) 
+
+        let nameInput = document.createElement("input")
+        nameInput.placeholder = "What To Do?"
+        inputDiv.appendChild(nameInput)
+
+        let submitButton = document.createElement("button")
+        submitButton.innerText = "submit"
+        inputDiv.appendChild(submitButton)
+
+
+        submitButton.addEventListener("click", () => {
+            let name = nameInput.value
+             console.log(nameInput.value)
+             inputDiv.remove()
+            callback(name) 
+            
+            })
+        
+
+    }
+    return {createProjectInput, appendProject, createToDoInput}
 })()
 
 let flowController = (() => {
