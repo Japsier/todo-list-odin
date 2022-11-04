@@ -21,17 +21,26 @@ const displayController = (() => {
         return projectPages
 
     }
-    let createProjectContent = (number) => {
-        console.log(number)
+    let switchProjectContent = (element, counter) => {
         let todoDisplay = document.querySelector(".todoDisplay")
         todoDisplay.innerHTML = ""
+        console.log(element)
+        console.log("counter = " + counter)
+
+        let elementNumber = null
+        for (let i = 0; i < counter; i++) {
+            if (element.classList.contains(`project${i}`)) {
+                elementNumber = i
+                console.log(elementNumber)
+            }
+        }
         projectPages.forEach((item) => {
             item.isActive = false
-            if (item.counter == number) {
+            if (item.counter == elementNumber) {
                 item.isActive = true
                 console.log(item.name)
-                for (let i = 0; i < item.todoLists.length; i++) {
-                   todoDisplay.appendChild(item.todoLists[i]) 
+                for (let j = 0; j < item.todoLists.length; j++) {
+                   todoDisplay.appendChild(item.todoLists[j]) 
                 }
             }
         })
@@ -70,7 +79,7 @@ const displayController = (() => {
             }
         })
     }
-        return {createProject, createProjectContent, addTodo, pushTodoToProject, removeProjectPage}
+        return {createProject, switchProjectContent, addTodo, pushTodoToProject, removeProjectPage}
 })()
 const projectFactory = (projectName, projectCounter) => {
 
@@ -131,29 +140,35 @@ let domStuff = (() => {
         projectDiv.addEventListener("click", (e) => {
             if(e.target.nodeName == "DIV") {
                 //go to this page
-                console.log("Div Pressed")
                 console.log(e.target.classList)
-                for (let i = 0; i < loopCounter; i++) {
-                    let tempDiv = document.querySelector(`.project${i}`)
-                    tempDiv.classList.remove("active")
+
+                let parent = document.querySelector(".projectsNav")
+                let children = parent.children
+                for(let i = 0; i < parent.children.length; i++) {
+                    let child = children[i];
+                    child.classList.remove("active")
                 }
-                for (let i = 0; i < loopCounter; i++) {
-                    let temp = `project${i}`
-                    if(e.target.classList.contains(temp)) {
-                        document.querySelector(`.project${i}`).classList.add("active")                     
-                        displayController.createProjectContent(i)
-                    } 
+
+                if (e.target.classList.contains("projectDiv")) {
+                    e.target.classList.add("active")
+                    displayController.switchProjectContent(e.target, loopCounter)
+
+                }
+                if(e.target.parentNode.classList.contains("projectDiv")) {
+                    e.target.parentNode.classList.add("active")
+                    displayController.switchProjectContent(e.target.parentNode, loopCounter)
+
                 }
 
             } else if (e.target.nodeName == "BUTTON") {
                 //remove this page
                 console.log("Button Pressed")
-                console.log(e.target.parentNode)
                 removeProject(e.target.parentNode, projectDivCounter)
             }
         })
 
     }   
+    
     let removeProject = (target, number) => {
         for (let i = 0; i < (number + 1); i++) {
             if(target.classList.contains(`project${i}`)) {
