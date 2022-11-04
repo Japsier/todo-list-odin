@@ -61,7 +61,16 @@ const displayController = (() => {
             }
         })
     }
-        return {createProject, createProjectContent, addTodo, pushTodoToProject}
+    let removeProjectPage = (number) => {
+        console.log(number)
+        projectPages.forEach((item) => {
+            if (item.counter == number) {
+                projectPages.splice(projectPages.indexOf(item), 1)
+                console.table(projectPages)
+            }
+        })
+    }
+        return {createProject, createProjectContent, addTodo, pushTodoToProject, removeProjectPage}
 })()
 const projectFactory = (projectName, projectCounter) => {
 
@@ -139,12 +148,19 @@ let domStuff = (() => {
             } else if (e.target.nodeName == "BUTTON") {
                 //remove this page
                 console.log("Button Pressed")
+                console.log(e.target.parentNode)
+                removeProject(e.target.parentNode, projectDivCounter)
             }
         })
 
     }   
-    let removeProject = () => {
-
+    let removeProject = (target, number) => {
+        for (let i = 0; i < (number + 1); i++) {
+            if(target.classList.contains(`project${i}`)) {
+                target.remove()
+                displayController.removeProjectPage(number)
+            }
+        }
     }
     let createToDoInput = (callback) => {
         console.log("input")
