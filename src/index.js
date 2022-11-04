@@ -79,7 +79,15 @@ const displayController = (() => {
             }
         })
     }
-        return {createProject, switchProjectContent, addTodo, pushTodoToProject, removeProjectPage}
+    let removeTodoFromProject = (todoElement) => {
+        projectPages.forEach((item) => {
+            if (item.isActive == true) {
+                let location = item.todoLists.indexOf(todoElement)
+                item.todoLists.splice(location, 1)
+            }
+        })
+    }
+        return {createProject, switchProjectContent, addTodo, pushTodoToProject, removeProjectPage, removeTodoFromProject}
 })()
 const projectFactory = (projectName, projectCounter) => {
 
@@ -220,9 +228,18 @@ let domStuff = (() => {
         todoDeleteButton.innerText = "X"
         todoDiv.appendChild(todoDeleteButton)
 
+        todoDeleteButton.addEventListener("click", (e) => {
+            console.log(e.target.parentNode)
+            removeTodoDiv(e.target.parentNode)
+        })
+
         todoCounter++
         displayController.pushTodoToProject(todoDiv)
 
+    }
+    let removeTodoDiv = (todoElement) => {
+        displayController.removeTodoFromProject(todoElement)
+        todoElement.remove()
     }
     return {createProjectInput, appendProject, createToDoInput, createTodoDiv}
 })()
