@@ -50,11 +50,35 @@ header {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     cursor: pointer;
 }
+.projectDiv {
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 5px;
+}
+.removeProjectButton {
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+.active {
+    background-color: yellow;
+}
 .content {
     grid-area: 2 / 2 / 3 / 3;
 }
-.content > h2 {
+.contentHeader {
+    position: relative;
+}
+.contentHeader > h2 {
     text-align: center;
+}
+.contentHeader > button {
+    position: absolute;
+    right: 20px;
+    top: 5px;
 }
 footer {
     grid-area: 3 / 1 / 4 / 3;
