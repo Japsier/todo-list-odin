@@ -37,15 +37,10 @@ const displayController = (() => {
         projectPages.forEach((item) => {
             console.log("hello")
             if (item.isActive == true) {
-                console.log("hello2")
-                let todoDiv = document.createElement("div")
-                todoDiv.classList.add("todoDiv")
-                document.querySelector(".content").appendChild(todoDiv)
+
 
                 function xxx(todoname) {
-                    let todoName = document.createElement("div")
-                    todoDiv.appendChild(todoName)
-                    todoName.innerText = todoname
+                    domStuff.createTodoDiv(todoname)
                 }
                 domStuff.createToDoInput(xxx)
                 
@@ -53,19 +48,34 @@ const displayController = (() => {
             }
         })
     }
-
-    return {createProject, createProjectContent, addTodo}
+    let pushTodoToProject = (todoElement) => {
+        projectPages.forEach((item) => {
+            if (item.isActive == true) {
+                item.todoLists.push(todoElement)
+                console.log(item.todoLists)
+            }
+        })
+    }
+        return {createProject, createProjectContent, addTodo, pushTodoToProject}
 })()
 const projectFactory = (projectName, projectCounter) => {
+
     let name = projectName
     let todoLists = []
     let isActive = false
     let counter = projectCounter
+    if (counter === 0) {
+        isActive = true
+    }
     return {name, todoLists, isActive, counter}
 
 };
 let domStuff = (() => {
     let  projectsSidebar = document.querySelector(".projectsNav")
+    let todoDisplay = document.createElement("div")
+    todoDisplay.classList.add("todoDisplay")
+    document.querySelector(".content").appendChild(todoDisplay)
+
     let createProjectInput = () => {
         let inputBox = document.createElement("input")
         let submitInput = document.createElement("button")
@@ -87,6 +97,10 @@ let domStuff = (() => {
         projectDiv.classList.add("projectDiv")
         projectDiv.classList.add(`project${projectDivCounter}`)
         projectsSidebar.appendChild(projectDiv)
+
+        if (loopCounter === 0) {
+            projectDiv.classList.add("active")
+        }
         
         let projectNameSection = document.createElement("div")
         projectNameSection.classList.add(`project${projectDivCounter}`)
@@ -145,18 +159,38 @@ let domStuff = (() => {
 
         submitButton.addEventListener("click", () => {
             let name = nameInput.value
-             console.log(nameInput.value)
-             inputDiv.remove()
+            console.log(nameInput.value)
+            inputDiv.remove()
+            //create more input and add them to callback later
             callback(name) 
             
-            })
+        })
         
 
     }
-    return {createProjectInput, appendProject, createToDoInput}
+    let createTodoDiv = (todoName) => {
+        let todoCounter = 0
+
+        let todoDiv = document.createElement("div")
+        todoDiv.classList.add("todoDiv", `todo${todoCounter}`)
+        todoDisplay.appendChild(todoDiv)
+
+        let todoDivName = document.createElement("div")
+        todoDivName.innerText = todoName
+        todoDiv.appendChild(todoDivName)
+
+        let todoDeleteButton = document.createElement("button")
+        todoDeleteButton.classList.add("todoDeleteButton")
+        todoDeleteButton.innerText = "X"
+        todoDiv.appendChild(todoDeleteButton)
+
+        todoCounter++
+        displayController.pushTodoToProject(todoDiv)
+
+    }
+    return {createProjectInput, appendProject, createToDoInput, createTodoDiv}
 })()
 
 let flowController = (() => {
     displayController.createProject("General")
-    console.log(projectFactory["General"])
 })()
