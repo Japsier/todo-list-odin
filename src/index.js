@@ -17,7 +17,6 @@ const displayController = (() => {
     let createProject = (projectName) => {
         projectPages.push(projectFactory(projectName, counter)) 
         domStuff.appendProject(projectName, counter)  
-        console.log(projectPages)
         counter++
         return projectPages
 
@@ -25,21 +24,17 @@ const displayController = (() => {
     let switchProjectContent = (element, counter) => {
         let todoDisplay = document.querySelector(".todoDisplay")
         todoDisplay.innerHTML = ""
-        console.log(element)
-        console.log("counter = " + counter)
 
         let elementNumber = null
         for (let i = 0; i < counter; i++) {
             if (element.classList.contains(`project${i}`)) {
                 elementNumber = i
-                console.log(elementNumber)
             }
         }
         projectPages.forEach((item) => {
             item.isActive = false
             if (item.counter == elementNumber) {
                 item.isActive = true
-                console.log(item.name)
                 for (let j = 0; j < item.todoLists.length; j++) {
                    todoDisplay.appendChild(item.todoLists[j]) 
                 }
@@ -50,7 +45,6 @@ const displayController = (() => {
     }
     let addTodo = () => {
         projectPages.forEach((item) => {
-            console.log("hello")
             if (item.isActive == true) {
 
 
@@ -67,22 +61,37 @@ const displayController = (() => {
         projectPages.forEach((item) => {
             if (item.isActive == true) {
                 item.todoLists.push(todoElement)
-                console.log(item.todoLists)
+            }
+            if (item.name == "General" && item.isActive == false) {
+                item.todoLists.push(todoElement)
             }
         })
     }
     let removeProjectPage = (number) => {
-        console.log(number)
         projectPages.forEach((item) => {
             if (item.counter == number) {
                 projectPages.splice(projectPages.indexOf(item), 1)
-                console.table(projectPages)
             }
         })
     }
     let removeTodoFromProject = (todoElement) => {
         projectPages.forEach((item) => {
+            //remove item from active project
             if (item.isActive == true) {
+                let location = item.todoLists.indexOf(todoElement)
+                item.todoLists.splice(location, 1)
+                //removes todo from other page if general is active
+                if (item.name == "General") {
+                    projectPages.forEach((item) => {
+                        if(item.todoLists.includes(todoElement)) {
+                            let location = item.todoLists.indexOf(todoElement)
+                            item.todoLists.splice(location, 1)
+                        }
+                    })
+                }
+            }
+            //also remove item from general
+            if (item.name == "General" && item.isActive == false) {
                 let location = item.todoLists.indexOf(todoElement)
                 item.todoLists.splice(location, 1)
             }
@@ -149,7 +158,6 @@ let domStuff = (() => {
         projectDiv.addEventListener("click", (e) => {
             if(e.target.nodeName == "DIV") {
                 //go to this page
-                console.log(e.target.classList)
 
                 let parent = document.querySelector(".projectsNav")
                 let children = parent.children
@@ -171,7 +179,6 @@ let domStuff = (() => {
 
             } else if (e.target.nodeName == "BUTTON") {
                 //remove this page
-                console.log("Button Pressed")
                 removeProject(e.target.parentNode, projectDivCounter)
             }
         })
@@ -187,7 +194,6 @@ let domStuff = (() => {
         }
     }
     let createToDoInput = (callback) => {
-        console.log("input")
         let contentDiv = document.querySelector(".content")
 
         let inputDiv = document.createElement("div")
@@ -205,7 +211,6 @@ let domStuff = (() => {
 
         submitButton.addEventListener("click", () => {
             let name = nameInput.value
-            console.log(nameInput.value)
             inputDiv.remove()
             //create more input and add them to callback later
             callback(name) 
@@ -246,7 +251,6 @@ let domStuff = (() => {
         todoDiv.appendChild(todoDeleteButton)
 
         todoDeleteButton.addEventListener("click", (e) => {
-            console.log(e.target.parentNode)
             removeTodoDiv(e.target.parentNode)
         })
 
@@ -263,4 +267,5 @@ let domStuff = (() => {
 
 let flowController = (() => {
     displayController.createProject("General")
+    document.querySelector(".removeProjectButton.project0").remove()
 })()
