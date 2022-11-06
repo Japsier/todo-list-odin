@@ -68,8 +68,24 @@ const displayController = (() => {
         })
     }
     let removeProjectPage = (number) => {
+        let general = null 
+        projectPages.forEach((item) => {
+            if (item.name == "General") {
+                general = item
+                return
+            }
+        })
         projectPages.forEach((item) => {
             if (item.counter == number) {
+                for (let i = 0; i < general.todoLists.length; i++) {
+                    for (let j = 0; j < item.todoLists.length; j++) {
+                        if (item.todoLists[j] == general.todoLists[i]) {
+                            let location = general.todoLists.indexOf(general.todoLists[i])
+                            general.todoLists.splice(location, 1)
+                        }
+                    }
+                }
+
                 projectPages.splice(projectPages.indexOf(item), 1)
             }
         })
