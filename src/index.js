@@ -1,4 +1,5 @@
 import "./style.css";
+///import { format, compareAsc } from 'date-fns'
 
 const listeners = (() => {
     document.querySelector(".addProjectButton").addEventListener("click", () => {
@@ -221,8 +222,23 @@ let domStuff = (() => {
         todoDisplay.appendChild(todoDiv)
 
         let todoDivName = document.createElement("div")
+        todoDivName.classList.add("todoName")
         todoDivName.innerText = todoName
         todoDiv.appendChild(todoDivName)
+
+        let dateDiv = document.createElement("div")
+        dateDiv.classList.add("dateDiv")
+        todoDiv.appendChild(dateDiv);
+
+        let dateDay = document.createElement("input")
+        dateDay.type = "date"
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        today = mm + '-' + dd + '-' + yyyy;
+        dateDay.value = today
+        dateDiv.appendChild(dateDay)
 
         let todoDeleteButton = document.createElement("button")
         todoDeleteButton.classList.add("todoDeleteButton")

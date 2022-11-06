@@ -122,18 +122,47 @@ header {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    margin-bottom: 10px;
+    margin: 30px;
 }
+.userInput > input {
+    outline: none; 
+    padding: 10px;
+    background-color: white;
+    border: 0;
+    border-bottom: 1px solid black;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+.userInput > button {
+    padding: 1px;
+    border: 0;
+    border-bottom: 1px solid black;
+    background-color: white;
+    font-size: 18px;
+    transition: 100ms linear;
+
+}
+.userInput > button:hover {
+    transform: scale(1.1);
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+
 .todoDiv {
     display: flex;
     padding: 10px;
     margin-left: 50px;
     margin-right: 50px;
-    justify-content: space-between;
     font-size: 22px;
     border-left: 2px solid #8360c3;
     margin-bottom: 20px;
+    align-items: center;
+    gap: 20px;
 }
+.dateDiv {
+    margin-left: auto;
+}
+
 .todoDiv > button {
     background-color: white;
     border: 0;
